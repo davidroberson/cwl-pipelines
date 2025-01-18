@@ -1,4 +1,4 @@
-# README.md
+# gVCF to SVCF
 
 ## Overview
 
