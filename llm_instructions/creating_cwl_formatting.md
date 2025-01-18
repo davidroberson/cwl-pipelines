@@ -1,6 +1,8 @@
+
+
 ### Prompt
 
-Convert the following CWL provided in Seven Bridges JSON style into YAML Flow style with the following specifications:
+Convert the following CWL (in any format) into YAML Flow style with the following specifications, ensuring that the output steps are on one line:
 
 1. **Inputs and Outputs**:
    - Represent `inputs` and `outputs` as compact YAML Flow sequences (`[item1, item2]`).
@@ -8,6 +10,7 @@ Convert the following CWL provided in Seven Bridges JSON style into YAML Flow st
 
 2. **Steps**:
    - Represent each `step` as a YAML mapping with all attributes (`id`, `sbg:x`, `sbg:y`, `run`, `in`, `out`) defined in a single line if possible.
+   - **Ensure that each step is outputted on one line.**
    - Maintain proper nesting for `run` attributes such as `inputs`, `outputs`, `requirements`, and `baseCommand`.
    - Include `in` and `out` fields on the same line with their respective connections.
 
@@ -51,7 +54,7 @@ Convert the following CWL provided in Seven Bridges JSON style into YAML Flow st
 ```
   
 **Output (YAML Flow Style):**  
-  
+      
 ```yaml
 class: Workflow
 cwlVersion: v1.2
@@ -64,4 +67,7 @@ steps: {
 ```
   
 Please process the CWL JSON below following these guidelines and convert it to the YAML Flow style format.
+
+---
+
 
