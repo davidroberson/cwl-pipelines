@@ -1,65 +1,45 @@
----
 
 ### **Updated Prompt Document**
 
 #### **Objective**
 
-This prompt is designed for use with an LLM. The user will paste a CWL workflow (in any format) and may request one or both of the following:
+This prompt is designed for use with an LLM. The user will paste a CWL workflow (in any format), and the following actions will be performed:
 
 1. **Workflow Formatting**:
+   - Convert the provided workflow into **YAML Flow style** (output as `.yaml`).
+   - Ensure the workflow steps and attributes are compact, valid CWL, and properly formatted.
 
-   - Convert the pasted workflow into **YAML Flow style** (output as `.yaml`).
-   - Ensure workflow steps and attributes are compact and properly formatted.
+2. **Markdown Document Creation**:
+   - Generate a Markdown document containing:
+     - **Formatted Workflow**: The entire workflow in YAML Flow style.
+     - **Extracted Tools**: Each `CommandLineTool` defined in the workflow will be extracted and documented.
 
-2. **Tool Extraction**:
+3. **Tool Documentation Specifications**:
+   - Each tool must have:
+     - A brief description of the tool and its purpose.
+     - A YAML Flow-formatted CWL code block for the tool.
+     - A clear break (e.g., `---`) between tools to improve readability.
+   - Include **all tools** found in the workflow.
 
-   - Extract and break out each `CommandLineTool` defined in the workflow into separate **YAML Flow-formatted CWL tool files**.
-   - Output these as a Markdown document containing the following:
-     - A section for each tool with a brief description preceding the CWL code.
-     - The CWL code block for the tool itself.
-     - A clear break between tools to improve readability.
+4. **Order of Sections in Output**:
+   - The **Formatted Workflow** section comes first.
+   - The **Extracted Tools** section follows, with all tools printed sequentially.
 
-3. **Optional Combined Request**:
-
-   - Perform both the workflow formatting and tool extraction tasks.
-
-#### **Specifications**
-
-1. **Inputs and Outputs**:
-
+5. **Key Specifications**:
    - Represent `inputs` and `outputs` as compact YAML Flow sequences (`[item1, item2]`).
    - Ensure each input or output is formatted on a single line.
-
-2. **Steps**:
-
-   - Represent each `step` as a YAML mapping with all attributes (`id`, `sbg:x`, `sbg:y`, `run`, `in`, `out`) defined on a single line if possible.
-   - Maintain proper nesting for `run` attributes such as `inputs`, `outputs`, `requirements`, and `baseCommand`.
-
-3. **CommandLineTool Separation**:
-
-   - **Break out each `CommandLineTool`** defined in the workflow into its own section in a Markdown document.
-   - For each tool:
-     - Start with a brief description of the tool and its purpose.
-     - Follow with a code block containing the YAML Flow-formatted CWL for the tool.
-     - Add a clear break (e.g., `---`) between tools.
-
-4. **Workflow and Tool File References**:
-
-   - Ensure the main workflow references the separated tool files correctly in the `run` field of each step.
-
-5. **Key Order**:
-
-   - Follow CWL conventions for key order.
+   - Steps should represent attributes (`id`, `sbg:x`, `sbg:y`, `run`, `in`, `out`) on a single line where possible.
+   - Maintain proper nesting for `run` attributes like `inputs`, `outputs`, `requirements`, and `baseCommand`.
 
 6. **Validation**:
-
    - Ensure all YAML files are valid CWL and conform to the specified formatting style.
 
 #### **Usage Notes for LLM**
 
-- If the user requests workflow formatting, return a `.yaml` file with the entire workflow in YAML Flow style.
-- If the user requests tool extraction, create a Markdown file with sections for each tool as described above.
-- If the user requests both tasks, ensure outputs include both the formatted workflow and the Markdown document for tools.
+- Always ensure the workflow provided by the user is formatted in YAML Flow style.
+- Always include a Markdown document with the formatted workflow and all extracted tools.
+- Print out **all tools** defined in the workflow, ensuring each has its own section with a description, CWL code block, and a clear separator.
 
-**Example User Request:** "Format this workflow in YAML Flow style and extract tools into a Markdown document."
+**Example User Request:**
+"Format this workflow in YAML Flow style and extract tools into a Markdown document."
 
